@@ -204,7 +204,7 @@ const Contact: React.FC = () => {
         </div>
         
         <div className="border-t border-white/10 mt-20 pt-8 text-center text-gray-500 text-sm">
-          © 2024 Radhika Sonagra
+        Radhika Sonagra
         </div>
       </div>
     </section>
