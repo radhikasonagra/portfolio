@@ -48,8 +48,8 @@ const Experience: React.FC = () => {
                 "Developed a Cloud Kitchen & Table Ordering system integrating Stripe and BHIM UPI.",
                 "Built Facebook Meta Flow automations using Node.js and Databases.",
                 "Created React Dashboards for real-time message tracking via Webhooks.",
-                "Engineered AI Chatbots (Text & Audio) using Gemini, Groq, and OpenAI.",
-                "Implemented secure Recharge Flows with Razorpay integration."
+                "Engineered AI Chatbots (Text & Audio) using Gemini, Groq, Tensor studio AI and OpenAI.",
+                "Implemented secure Flows with Razorpay integration."
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3 text-gray-300">
                   <span className="mt-2 w-1.5 h-1.5 bg-secondary rounded-full shrink-0 group-hover:bg-primary transition-colors" />
