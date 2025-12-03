@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as m, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Youtube, ChevronLeft, ChevronRight, Code2, X } from 'lucide-react';
 import { Project } from '../types';
+
+const motion = m as any;
 
 const projects: Project[] = [
   {
@@ -98,30 +100,22 @@ const Projects: React.FC = () => {
   };
 
   // 3D Config
-  const cardWidth = 320; 
+  // Responsive sizing
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const cardWidth = isMobile ? 260 : 320; 
   const gap = 40; 
   const totalItems = projects.length;
-  const radius = Math.max(450, (totalItems * (cardWidth + gap)) / (2 * Math.PI)); 
+  // Adjust radius for mobile to prevent deep depth issues
+  const radius = Math.max(isMobile ? 280 : 450, (totalItems * (cardWidth + gap)) / (2 * Math.PI)); 
   const anglePerItem = 360 / totalItems;
 
   const currentProject = projects[currentIndex];
 
-  // Helper to extract Video ID - kept for external link generation if needed
   const getVideoId = (url: string | undefined) => {
     if (!url) return null;
-    try {
-      let id = '';
-      if (url.includes('youtu.be/')) {
-        id = url.split('youtu.be/')[1].split('?')[0];
-      } else if (url.includes('shorts/')) {
-        id = url.split('shorts/')[1].split('?')[0];
-      } else if (url.includes('v=')) {
-        id = url.split('v=')[1].split('&')[0];
-      }
-      return id;
-    } catch (e) {
-      return null;
-    }
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
   };
 
   const videoId = getVideoId(currentProject.youtubeUrl);
@@ -139,10 +133,10 @@ const Projects: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-center mb-16 z-10"
+        className="text-center mb-10 z-10"
       >
         <h2 className="text-3xl md:text-4xl font-bold mb-4">Project <span className="text-primary">Universe</span></h2>
-        <p className="text-gray-400"> Rotate to explore.</p>
+        <p className="text-gray-400">3D Holographic Showcase. Rotate to explore.</p>
       </motion.div>
 
       {/* 3D SCENE CONTAINER */}
@@ -150,7 +144,7 @@ const Projects: React.FC = () => {
         
         {/* CAROUSEL ROTATOR */}
         <motion.div
-          className="relative w-[320px] h-[380px] preserve-3d"
+          className="relative w-[260px] h-[360px] md:w-[320px] md:h-[380px] preserve-3d"
           style={{ 
             transformStyle: 'preserve-3d',
           }}
@@ -159,6 +153,8 @@ const Projects: React.FC = () => {
         >
           {projects.map((project, index) => {
             const itemRotation = index * anglePerItem;
+            // Determine if this is the active card for Z-index calculation
+            const isActive = index === currentIndex;
             
             return (
               <div
@@ -166,12 +162,13 @@ const Projects: React.FC = () => {
                 className="absolute top-0 left-0 w-full h-full backface-visible"
                 style={{
                   transform: `rotateY(${itemRotation}deg) translateZ(${radius}px)`,
+                  zIndex: isActive ? 50 : 10, // Ensure active card is on top for clicks
                 }}
               >
                 {/* CARD CONTENT */}
                 <div 
-                  className={`relative w-full h-full rounded-2xl overflow-hidden border transition-all duration-500 group cursor-pointer ${
-                     index === currentIndex 
+                  className={`relative w-full h-full rounded-2xl overflow-hidden border transition-all duration-500 group cursor-pointer touch-manipulation ${
+                     isActive 
                      ? 'bg-dark/80 border-primary/50 shadow-[0_0_50px_rgba(99,102,241,0.3)] scale-105' 
                      : 'bg-dark/40 border-white/5 opacity-50 grayscale hover:grayscale-0 hover:opacity-80'
                   }`}
@@ -217,7 +214,7 @@ const Projects: React.FC = () => {
       </div>
 
       {/* CONTROLS */}
-      <div className="flex items-center gap-6 mt-12 z-20">
+      <div className="flex items-center gap-6 mt-6 z-20">
         <button 
           onClick={() => rotateCarousel('prev')}
           className="p-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary text-white transition-all shadow-lg backdrop-blur-md group"
@@ -263,7 +260,7 @@ const Projects: React.FC = () => {
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               className="relative bg-[#0f172a] border border-white/10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden"
             >
-                {/* Image Section (Replaced Video) */}
+                {/* Image Section */}
                 <div className="w-full md:w-1/2 bg-black relative min-h-[300px] flex items-center justify-center overflow-hidden">
                     <img 
                       src={currentProject.image} 
