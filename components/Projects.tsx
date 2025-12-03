@@ -142,7 +142,7 @@ const Projects: React.FC = () => {
         className="text-center mb-16 z-10"
       >
         <h2 className="text-3xl md:text-4xl font-bold mb-4">Project <span className="text-primary">Universe</span></h2>
-        <p className="text-gray-400">3D Holographic Showcase. Rotate to explore.</p>
+        <p className="text-gray-400"> Rotate to explore.</p>
       </motion.div>
 
       {/* 3D SCENE CONTAINER */}
