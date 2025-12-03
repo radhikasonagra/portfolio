@@ -25,7 +25,7 @@ const educationData: EducationItem[] = [
   {
     id: 2,
     degree: "Higher Secondary (HSC)",
-    institution: "Mangalam School - Halvad",
+    institution: "Mangalam Science School - Halvad",
     year: "2018 - 2020",
     score: "Percentage: 81.00%",
     color: "from-purple-600 to-pink-600",
@@ -34,7 +34,7 @@ const educationData: EducationItem[] = [
   {
     id: 3,
     degree: "Secondary School (SSC)",
-    institution: "Mangalam School - Halvad",
+    institution: "Mangalam Science School - Halvad",
     year: "2017 - 2018",
     score: "Percentage: 72.37%",
     color: "from-emerald-600 to-teal-600",
