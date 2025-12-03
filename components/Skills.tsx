@@ -36,7 +36,7 @@ const Skills: React.FC = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Tech <span className="text-secondary">Universe</span></h2>
-          <p className="text-gray-400">My technical arsenal in 3D and 2D.</p>
+          <p className="text-gray-400">My technical arsenal</p>
         </motion.div>
 
         {/* Changed grid-cols-1 lg:grid-cols-2 to grid-cols-1 md:grid-cols-2 for better side-by-side view */}
