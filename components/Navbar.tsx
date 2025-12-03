@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as m, AnimatePresence } from 'framer-motion';
 import { Menu, X, Download } from 'lucide-react';
+
+const motion = m as any;
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -14,20 +16,24 @@ const Navbar: React.FC = () => {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    const targetId = href.replace('#', '');
-    const element = document.getElementById(targetId);
-    
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - offset;
+    setIsOpen(false); // Close menu immediately
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-      setIsOpen(false);
-    }
+    const targetId = href.replace('#', '');
+    
+    // Small timeout to allow the menu to close and layout to stabilize before scrolling
+    setTimeout(() => {
+        const element = document.getElementById(targetId);
+        if (element) {
+            const offset = 80;
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    }, 100);
   };
 
   const links = [
@@ -56,7 +62,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ${scrolled ? 'bg-darker/80 backdrop-blur-md py-4 border-b border-white/5' : 'bg-transparent py-6'}`}>
+    <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${scrolled ? 'bg-darker/80 backdrop-blur-md py-4 border-b border-white/5' : 'bg-transparent py-6'}`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         <a 
           href="#home" 
