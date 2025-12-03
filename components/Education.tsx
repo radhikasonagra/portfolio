@@ -55,7 +55,7 @@ const Education: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Academic <span className="text-secondary">Milestones</span>
           </h2>
-          <p className="text-gray-400">My educational journey visualized in 3D.</p>
+          <p className="text-gray-400">My educational journey</p>
         </motion.div>
 
         {/* 3D Card Grid - All Visible */}
